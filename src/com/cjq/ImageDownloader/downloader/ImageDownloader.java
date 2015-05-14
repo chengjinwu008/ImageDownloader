@@ -7,7 +7,7 @@ import android.os.Environment;
 import android.os.Handler;
 import android.os.Looper;
 import android.view.View;
-import android.widget.ProgressBar;
+import com.cjq.CircleProgress.view.CircleProgress;
 import com.cjq.DownLoader.utils.Downloader;
 import com.cjq.DownLoader.utils.ProgressLogUtil;
 import com.cjq.ImageDownloader.DAO.ImagePositionLogUtil;
@@ -42,7 +42,7 @@ public class ImageDownloader {
         void loadFinish(Bitmap bitmap);
     }
 
-    public void loadUrlPicBitmap(String imageURL, int width, int height, LoadImageListener listener, ProgressBar progressBar) {
+    public void loadUrlPicBitmap(String imageURL, int width, int height, LoadImageListener listener, CircleProgress progressBar) {
         loadImageCache(progressBar, imageURL, cacheDir, width, height, new ImageDownloaderListener() {
             @Override
             public void loadFinish() {
@@ -65,7 +65,7 @@ public class ImageDownloader {
         }
     }
 
-    private void loadImageCache(ProgressBar progressBar, String imageURL, String cacheDir, int width, int height, ImageDownloaderListener listener) {
+    private void loadImageCache(CircleProgress progressBar, String imageURL, String cacheDir, int width, int height, ImageDownloaderListener listener) {
 
         file = logUtil.select(imageURL);
         if (file == null || !file.exists()) {
