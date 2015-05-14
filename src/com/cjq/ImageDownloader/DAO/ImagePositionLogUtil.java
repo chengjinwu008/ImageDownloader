@@ -29,7 +29,7 @@ public class ImagePositionLogUtil {
         contentValues.put("in_sample_size", in_sample_size);
         id = database.insert(TABLE_NAME, null, contentValues);
 
-//        database.close();
+        database.close();
         return id;
     }
 
@@ -59,12 +59,12 @@ public class ImagePositionLogUtil {
             file.setInSampleSize(in_sample_size);
         } else {
             cursor.close();
-//            database.close();
+            database.close();
             throw new RuntimeException("More than one item selected");
         }
 
         cursor.close();
-//        database.close();
+        database.close();
         return file;
     }
 
