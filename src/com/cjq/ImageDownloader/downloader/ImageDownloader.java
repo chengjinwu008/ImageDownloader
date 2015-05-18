@@ -21,6 +21,7 @@ import java.io.IOException;
  */
 public class ImageDownloader {
 
+    private static final long TIME_FOR_CACHE = 3600 * 24 * 1000;//默认缓存时间
     private ProgressLogUtil progressLogUtil;
     private static final int THREAD_SIZE = 3;
     private BitmapFile file;
@@ -68,9 +69,12 @@ public class ImageDownloader {
     private void loadImageCache(CircleProgress progressBar, String imageURL, String cacheDir, int width, int height, ImageDownloaderListener listener) {
 
         file = logUtil.select(imageURL);
-        if (file == null || !file.exists()) {
+        if (file == null || !file.exists() || System.currentTimeMillis()-file.lastModified()<TIME_FOR_CACHE) {
             if(file!=null){
                 logUtil.delete(file.getPath());
+                if(file.exists()){
+                    file.delete();//如果缓存时间超过了，则删除缓存
+                }
             }
             Downloader downloader = new Downloader(imageURL, cacheDir, progressLogUtil, THREAD_SIZE, new Downloader.DownloaderListener() {
                 @Override
